@@ -1,0 +1,37 @@
+# Minimal Helm values for Homarr
+# This file instructs the chart to use an existing Kubernetes Secret
+# named `db-encryption` which must contain a key `db-encryption-key`.
+#
+# Usage:
+# 1) Generate and apply the secret (example command below)
+# 2) Install/upgrade Helm release:
+#    helm repo add homarr-labs https://homarr-labs.github.io/charts/
+#    helm repo update
+#    helm upgrade --install homarr homarr-labs/homarr -n homarr --create-namespace -f values-homarr.yaml
+
+# Optional: set some common environment variables
+env:
+  TZ: "UTC" # change to your timezone if needed
+
+replicaCount: 2
+podLabels:
+  hello: world
+
+# Tell the chart to use an existing Kubernetes Secret for DB encryption
+envSecrets:
+  dbEncryption:
+    # Name of the Kubernetes Secret that contains the encryption key
+    existingSecret: db-encryption
+    # Key inside the Secret that contains the encryption key used by Homarr
+    # (the chart default is "db-encryption-key")
+    key: db-encryption-key
+# (Optional) You can switch database type if you plan to use external DBs
+# database:
+#   type: sqlite # or mysql, postgresql
+
+# (Optional) Enable persistent storage for Homarr DB
+# persistence:
+#   homarrDatabase:
+#     enabled: true
+#     size: 200Mi
+#     storageClassName: "local-path"  # adjust to your cluster's storage class
