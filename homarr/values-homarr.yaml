@@ -17,6 +17,10 @@ replicaCount: 2
 podLabels:
   hello: world
 
+service:
+  type: LoadBalancer
+  port: 7575
+
 # Tell the chart to use an existing Kubernetes Secret for DB encryption
 envSecrets:
   dbEncryption:
