@@ -1,0 +1,11 @@
+- Monitoring:
+    - Grafana:
+        icon: grafana
+        href: http://192.168.64.101:3000
+        description: Metrics dashboard (from services)
+
+- Apps:
+    - Linkding:
+        icon: linkding
+        href: http://192.168.64.201:9090
+        description: Linkding dashboard (from services)

@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: linkding
+  name: linkding
+  namespace: linkding
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: linkding
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: linkding
+    spec:
+      containers:
+        - image: ghcr.io/sissbruecker/linkding:1.44.1-plus-alpine
+          name: linkding
+          ports:
+            - containerPort: 9090
+          volumeMounts:
+            - mountPath: /app/data
+              name: linkding-data
+      volumes:
+        - name: linkding-data
+          persistentVolumeClaim:
+            claimName: linkding-data
+status: {}

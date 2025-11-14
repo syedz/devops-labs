@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: homepage
+data:
+  services.yaml: |
+    - Monitoring:
+        - Grafana:
+            icon: grafana
+            href: http://192.168.64.101:3000
+            description: Metrics dashboard (from config)
+
+    - Apps:
+        - Linkding:
+            icon: linkding
+            href: http://192.168.64.201:9090
+            description: Linkding dashboard (from config)
+  settings.yaml: |
+    title: Zee's Homepage
+    theme: dark
+    layout:
+      - Monitoring
+      - Apps
+  # kubernetes.yaml: |
+  #   # empty file to prevent Homepage from trying to write it

@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: homepage
+  name: homepage
+  namespace: homepage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homepage
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: homepage
+    spec:
+      initContainers:
+        - name: copy-config
+          image: busybox
+          command: ["sh", "-c", "cp -Lf /config/* /app/config/"]
+          volumeMounts:
+            # ConfigMap mounted read-only
+            - name: homepage-config
+              mountPath: /config
+
+            # PersistentVolumeClaim mounted read-write
+            - name: homepage-storage
+              mountPath: /app/config
+
+      containers:
+        - image: ghcr.io/gethomepage/homepage:latest
+          name: homepage
+          ports:
+            - containerPort: 3000
+          env:
+            - name: HOMEPAGE_ALLOWED_HOSTS
+              value: "*"
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "250m"
+              memory: "256Mi"
+          volumeMounts:
+            - name: homepage-storage
+              mountPath: /app/config
+
+      volumes:
+        - name: homepage-storage
+          persistentVolumeClaim:
+            claimName: homepage-storage
+
+        # ConfigMap containing YAML files
+        - name: homepage-config
+          configMap:
+            name: homepage-config
+status: {}
