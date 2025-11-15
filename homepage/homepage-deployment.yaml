@@ -57,4 +57,9 @@ spec:
         - name: homepage-config
           configMap:
             name: homepage-config
+            items:
+              - key: services.yaml
+                path: services.yaml
+              - key: settings.yaml
+                path: settings.yaml
 status: {}
