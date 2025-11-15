@@ -8,7 +8,7 @@ data:
     - Monitoring:
         - Grafana:
             icon: grafana
-            href: http://192.168.64.101:3000
+            href: http://192.168.64.204:3000
             description: Metrics dashboard (from config)
 
     - Apps:
@@ -16,6 +16,11 @@ data:
             icon: linkding
             href: http://192.168.64.201:9090
             description: Linkding dashboard (from config)
+
+        - Mealie:
+            icon: mealie
+            href: http://192.168.64.203:9000
+            description: Mealie (from config)
   settings.yaml: |
     title: Zee's Homepage
     theme: dark
