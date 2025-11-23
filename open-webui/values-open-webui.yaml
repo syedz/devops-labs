@@ -1,0 +1,22 @@
+service:
+  # -- Service type to expose Open WebUI pods to cluster. Options are ClusterIP, NodePort, LoadBalancer, or ExternalName
+  # @section -- Service configuration
+  type: LoadBalancer
+  # -- Additional annotations to add to the Service
+  # @section -- Service configuration
+  annotations: {}
+  # -- Port to expose Open WebUI service on
+  # @section -- Service configuration
+  port: 80
+  # -- Target port for the Open WebUI container
+  # @section -- Service configuration
+  containerPort: 8080
+  # -- Node port to use if service type is NodePort
+  # @section -- Service configuration
+  nodePort: ""
+  # -- Additional custom labels to add to the Service metadata
+  # @section -- Service configuration
+  labels: {}
+  # -- Load balancer class to use if service type is LoadBalancer (e.g., for GKE use "gce")
+  # @section -- Service configuration
+  loadBalancerClass: ""
