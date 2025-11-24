@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  .gitkeep: ""
+kind: ConfigMap
+metadata:
+  labels:
+    io.kompose.service: 8mblocal
+  name: 8mblocal-cm1
+  namespace: video-convertor

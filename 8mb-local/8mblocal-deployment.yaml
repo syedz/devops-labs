@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.37.0 (HEAD)
+  labels:
+    io.kompose.service: 8mblocal
+  name: 8mblocal
+  namespace: video-convertor
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: 8mblocal
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose -f docker-compose.yml convert
+        kompose.version: 1.37.0 (HEAD)
+      labels:
+        io.kompose.service: 8mblocal
+    spec:
+      containers:
+        - env:
+            - name: LIBVA_DRIVER_NAME
+              value: iHD
+            - name: NVIDIA_DRIVER_CAPABILITIES
+              value: compute,video,utility
+            - name: NVIDIA_VISIBLE_DEVICES
+              value: all
+            - name: REDIS_URL
+              value: redis://127.0.0.1:6379/0
+          image: jms1717/8mblocal:latest
+          name: 8mblocal
+          ports:
+            - containerPort: 8001
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /app/uploads
+              name: 8mblocal-cm0
+            - mountPath: /app/outputs
+              name: 8mblocal-cm1
+            - mountPath: /app/.env
+              name: 8mblocal-claim2
+      restartPolicy: Always
+      volumes:
+        - configMap:
+            name: 8mblocal-cm0
+          name: 8mblocal-cm0
+        - configMap:
+            name: 8mblocal-cm1
+          name: 8mblocal-cm1
+        - name: 8mblocal-claim2
+          persistentVolumeClaim:
+            claimName: 8mblocal-claim2
